@@ -4,6 +4,7 @@
 
 #include <vector>
 
+// todo Threading
 class EventGenerator
 {
 private:
