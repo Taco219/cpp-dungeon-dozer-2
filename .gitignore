@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+DungeonDozer2
+
+.vscode/

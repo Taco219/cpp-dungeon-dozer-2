@@ -1,6 +1,6 @@
 TARGET=DungeonDozer2
 
-CFLAGS=-Wall -Iinclude -Werror -Wextra -pedantic -ggdb -O0 -std=c++11
+CFLAGS=-Wall -Iinclude -Iinclude/interface -Werror -Wextra -pedantic -ggdb -O0 -std=c++11
 
 SOURCE_DIRECTORY=./src
 INCLUDE_DIRECTORY=./include
@@ -9,9 +9,6 @@ TEST_DIRECTORY=./test
 SOURCES=$(wildcard ${SOURCE_DIRECTORY}/**/*.cpp) \
 	$(wildcard ${SOURCE_DIRECTORY}/main.cpp) \
 	$(wildcard ${SOURCE_DIRECTORY}/application.cpp) 
-
-HEADERS=$(wildcard ${INCLUDE_DIRECTORY}/*.hpp) \
-        $(wildcard ${INCLUDE_DIRECTORY}/interfaces/*.hpp)
 
 LIBS=-pthread
 
