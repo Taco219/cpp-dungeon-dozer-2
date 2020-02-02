@@ -1,31 +1,31 @@
 TARGET=DungeonDozer2
 
-CFLAGS=-Wall -Iinclude -Iinclude/interface -Werror -Wextra -pedantic -ggdb -O0 -std=c++11
-
-SOURCE_DIRECTORY=./src
-INCLUDE_DIRECTORY=./include
-TEST_DIRECTORY=./test
+SOURCE_DIRECTORY=./src/
+ODIR=./obj/
+SDIR = ./src/
 
 SOURCES=$(wildcard ${SOURCE_DIRECTORY}/**/*.cpp) \
 	$(wildcard ${SOURCE_DIRECTORY}/main.cpp) \
 	$(wildcard ${SOURCE_DIRECTORY}/application.cpp) 
 
-LIBS=-pthread
+_OBJ = $(SOURCES:.cpp=.o)  
+OBJ = $(addprefix $(ODIR), $(notdir $(_OBJ)))
 
+CFLAGS=-Wall -Iinclude -Iinclude/interface -Werror -Wextra -pedantic -ggdb -O0 -std=c++11
+LIBS=-pthread
 CXX=g++
 
 .phony: all clean test
 
 all: $(TARGET)
 
-$(TARGET): $(SOURCES)
-	@$(CXX) $(CFLAGS) $(SOURCES) -o $@ $(LIBS)
+$(ODIR)%.o: $(SDIR)%.cpp $(DEPS)
+	@$(CXX) -c -o $@ $< $(CFLAGS)
+$(ODIR)%.o: $(SDIR)**/%.cpp $(DEPS)
+	@$(CXX) -c -o $@ $< $(CFLAGS)
 
-$(TEST): $(TEST_SOURCES)
-	@$(CXX) $(CFLAGS) -Itest $(TEST_SOURCES) -o $@ $(TEST_LIBS)
+$(TARGET): $(OBJ)
+	@$(CXX) -o $@ $^ $(CFLAGS) $(LIBS)
 
 clean:
-	@rm -rf $(TARGET) $(TEST)
-
-test: $(TEST)
-	@./$(TEST)
+	@rm -rf $(TARGET) $(TEST) $(OBJ)
