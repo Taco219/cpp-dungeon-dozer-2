@@ -45,5 +45,4 @@ void Game::Run()
             }
         }
     }
-    std::cout << "HELLO" << std::endl;
 }

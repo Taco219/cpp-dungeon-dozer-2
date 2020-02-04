@@ -5,6 +5,7 @@ SdFight::SdFight(Console &console, EventGenerator &eventGenerator, Player &playe
 {
     console.Fgth_start(player.GetName(), monster.GetName());
     EnterPlayerTurn();
+    currentFightState = PLAYER_TURN;
 }
 
 void SdFight::HandleEvent(Event event)

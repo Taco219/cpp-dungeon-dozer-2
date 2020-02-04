@@ -6,7 +6,6 @@
 int main()
 {
     EventGenerator *evg = new EventGenerator();
-
     Console *console = new Console(*evg);
 
     Game g = Game(*console, *evg);
@@ -14,4 +13,6 @@ int main()
 
     delete console;
     console = nullptr;
+    delete evg;
+    evg = nullptr;
 }

@@ -25,7 +25,7 @@ private:
 
 public:
     Console(EventGenerator &EventGenerator);
-    virtual ~Console() = default;
+    virtual ~Console();
 
     void PrintHelloWorld();
 

@@ -9,6 +9,12 @@ Console::Console(EventGenerator &eventGenerator)
     thread = std::thread(&Console::StartPrinting, this);
 }
 
+Console::~Console()
+{
+    shouldBePrinting = false;
+    thread.join();
+}
+
 void Console::StartPrinting()
 {
     while (shouldBePrinting)
