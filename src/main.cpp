@@ -5,13 +5,13 @@
 
 int main()
 {
-    std::cout << "Hallo dungeion 2" << std::endl;
-    EventGenerator evg = EventGenerator();
-    SdFight fight;
+    EventGenerator *evg = new EventGenerator();
 
-    Console *console = new Console(evg);
-    console->PrintHelloWorld();
+    Console *console = new Console(*evg);
 
-    Game g = Game(evg, fight);
+    Game g = Game(*console, *evg);
     g.Run();
+
+    delete console;
+    console = nullptr;
 }

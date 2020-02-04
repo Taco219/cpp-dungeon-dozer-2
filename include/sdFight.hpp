@@ -1,21 +1,37 @@
 #pragma once
 
+#include "console.hpp"
 #include "events.hpp"
+#include "eventGenerator.hpp"
+#include "iMob.hpp"
+#include "monster.hpp"
+#include "player.hpp"
 
 enum FightState
 {
-    WAIT_FOR_PLAYER_ATT,
-    WAIT_FOR_MONSTER_ATT
+    PLAYER_TURN,
+    MONSTER_TURN
 };
 
 class SdFight
 {
 private:
+    Console &console;
+    EventGenerator &eventGenerator;
+    Player &player;
+    Monster &monster;
+
     FightState currentFightState;
 
-    void HandleWaitForPlayerAtt(Event event);
-    void HandleWaitForMontserAtt(Event event);
+    void Attack(IMob &attacker, IMob &reciever);
+
+    void EnterPlayerTurn();
+    void HandlePlayerTurn(Event event);
+
+    void EnterMonsterTurn();
+    void HandleMonsterTurn(Event event);
 
 public:
+    SdFight(Console &console, EventGenerator &eventGenerator, Player &player, Monster &monster);
     void HandleEvent(Event event);
 };

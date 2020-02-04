@@ -1,16 +1,19 @@
 #pragma once
 
+#include "console.hpp"
 #include "eventGenerator.hpp"
 #include "sdFight.hpp"
 
 class Game
 {
 private:
+    Console &console;
     EventGenerator &eventGenerator;
-    SdFight &fight;
+    SdFight *fight;
     bool isPlaying;
 
 public:
-    Game(EventGenerator &EventGenerator, SdFight &fight);
+    Game(Console &console, EventGenerator &EventGenerator);
+    ~Game();
     void Run();
 };

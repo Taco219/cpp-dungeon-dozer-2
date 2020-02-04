@@ -2,12 +2,13 @@
 
 #include "events.hpp"
 
+#include <mutex>
 #include <vector>
 
-// todo Threading
 class EventGenerator
 {
 private:
+    std::mutex mutex;
     std::vector<Event> events;
 
 public:

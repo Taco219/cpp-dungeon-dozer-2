@@ -1,6 +1,7 @@
 #pragma once
 
 #include "eventGenerator.hpp"
+#include "iMob.hpp"
 
 #include <mutex>
 #include <string>
@@ -27,4 +28,7 @@ public:
     virtual ~Console() = default;
 
     void PrintHelloWorld();
+
+    void Fgth_start(const std::string &playerName, const std::string &monsterName);
+    void Fgth_mobAttack(const IMob &attacker, const IMob &reciever);
 };
