@@ -3,7 +3,7 @@
 SdFight::SdFight(Console &console, EventGenerator &eventGenerator, Player &player, Monster &monster)
     : console(console), eventGenerator(eventGenerator), player(player), monster(monster)
 {
-    console.Fgth_start(player.GetName(), monster.GetName());
+    console.FgthStart(player.GetName(), monster.GetName());
     EnterPlayerTurn();
     currentFightState = PLAYER_TURN;
 }
@@ -28,7 +28,7 @@ void SdFight::Attack(IMob &attacker, IMob &reciever)
 {
     int attackDamage = attacker.GetAttack();
     reciever.RecieveDamage(attackDamage);
-    console.Fgth_mobAttack(attacker, reciever);
+    console.FgthMobAttack(attacker, reciever);
 }
 
 void SdFight::EnterPlayerTurn()

@@ -29,6 +29,8 @@ public:
 
     void PrintHelloWorld();
 
-    void Fgth_start(const std::string &playerName, const std::string &monsterName);
-    void Fgth_mobAttack(const IMob &attacker, const IMob &reciever);
+    void FgthStart(const std::string &playerName, const std::string &monsterName);
+    void FgthPickPlayerAction();
+    void FgthMobAttack(const IMob &attacker, const IMob &reciever);
+    void FgthMobDied(const IMob &mob);
 };

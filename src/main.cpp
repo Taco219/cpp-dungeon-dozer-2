@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+#include <chrono>
+#include <thread>
+
 int main()
 {
     EventGenerator *evg = new EventGenerator();
@@ -10,6 +13,8 @@ int main()
 
     Game g = Game(*console, *evg);
     g.Run();
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
     delete console;
     console = nullptr;

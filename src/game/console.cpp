@@ -5,6 +5,7 @@
 Console::Console(EventGenerator &eventGenerator)
     : eventGenerator(eventGenerator)
 {
+    linesToPrint = std::vector<std::string>();
     shouldBePrinting = true;
     thread = std::thread(&Console::StartPrinting, this);
 }
@@ -45,18 +46,25 @@ void Console::PrintHelloWorld()
     AddToPrintQue("Hello world!");
 }
 
-void Console::Fgth_start(const std::string &playerName, const std::string &monsterName)
+void Console::FgthStart(const std::string &playerName, const std::string &monsterName)
 {
     std::ostringstream text(std::ostringstream::ate);
     text << playerName << " is fighting " << monsterName << "\n";
     AddToPrintQue(text.str());
 }
 
-void Console::Fgth_mobAttack(const IMob &attacker, const IMob &reciever)
+void Console::FgthMobAttack(const IMob &attacker, const IMob &reciever)
 {
     std::ostringstream text(std::ostringstream::ate);
     text << attacker.GetName() << " attacked "
          << reciever.GetName() << " for " << attacker.GetAttack() << "\n"
          << reciever.GetName() << " has " << reciever.GetHealth() << " health left.\n";
+    AddToPrintQue(text.str());
+}
+
+void Console::FgthMobDied(const IMob &mob)
+{
+    std::ostringstream text(std::ostringstream::ate);
+    text << mob.GetName() << "has died.";
     AddToPrintQue(text.str());
 }

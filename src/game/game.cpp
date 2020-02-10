@@ -33,11 +33,11 @@ void Game::Run()
             switch (event)
             {
             case FGT_PLAYER_DIED:
-                std::cout << "Player died \n";
+                console.FgthMobDied(player);
                 isPlaying = false;
                 break;
             case FGT_MONSTER_DIED:
-                std::cout << "Monster died \n";
+                console.FgthMobDied(monster);
                 isPlaying = false;
                 break;
             default:
