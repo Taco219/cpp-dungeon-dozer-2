@@ -36,6 +36,10 @@ void Game::Run()
                 console.FgthMobDied(player);
                 isPlaying = false;
                 break;
+            case FGT_PLAYER_FLED:
+                console.FgthMobFled(player);
+                isPlaying = false;
+                break;
             case FGT_MONSTER_DIED:
                 console.FgthMobDied(monster);
                 isPlaying = false;

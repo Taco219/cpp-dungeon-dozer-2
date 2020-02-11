@@ -1,7 +1,9 @@
 #include "console.hpp"
 
+#include <chrono>
 #include <iostream>
 #include <sstream>
+#include <thread>
 
 Console::Console(EventGenerator &eventGenerator)
     : eventGenerator(eventGenerator)
@@ -40,6 +42,14 @@ void Console::AddToPrintQue(std::string lineToPrint)
 {
     std::lock_guard<std::mutex> guard(vecMutex);
     linesToPrint.push_back(lineToPrint);
+}
+
+void Console::WaitForConsole()
+{
+    while (linesToPrint.size() > 0)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
 }
 
 std::string Console::ReadLine()
@@ -94,7 +104,8 @@ u_int Console::ReadLineInt(u_int maxValue)
 
 void Console::PrintInvalidInput()
 {
-    printf("Invalid input!\n");
+    AddToPrintQue("Invalid input");
+    WaitForConsole();
 }
 
 // public
@@ -120,8 +131,32 @@ void Console::FgthMobDied(const IMob &mob)
     text << mob.GetName() << " has died.";
     AddToPrintQue(text.str());
 }
+void Console::FgthMobFled(const IMob &mob)
+{
+    std::ostringstream text(std::ostringstream::ate);
+    text << mob.GetName() << " has fled.";
+    AddToPrintQue(text.str());
+}
 
 void Console::FgthPlayerPickAction()
 {
-    ReadLineInt();
+    std::ostringstream text(std::ostringstream::ate);
+    text << "Choose your action. \n"
+         << "(0) attack. \n"
+         << "(1) flee.";
+    AddToPrintQue(text.str());
+    WaitForConsole();
+
+    u_int i = ReadLineInt(1);
+    switch (i)
+    {
+    case 0:
+        eventGenerator.PushEvent(FGT_PLAYER_ATT);
+        break;
+    case 1:
+        eventGenerator.PushEvent(FGT_PLAYER_FLED);
+        break;
+    default:
+        break;
+    }
 }

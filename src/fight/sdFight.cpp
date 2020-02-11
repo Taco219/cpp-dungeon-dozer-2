@@ -33,7 +33,7 @@ void SdFight::Attack(IMob &attacker, IMob &reciever)
 
 void SdFight::EnterPlayerTurn()
 {
-    eventGenerator.PushEvent(FGT_PLAYER_ATT);
+    console.FgthPlayerPickAction();
 }
 
 void SdFight::HandlePlayerTurn(Event event)

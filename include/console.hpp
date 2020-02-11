@@ -22,6 +22,7 @@ private:
     void PrintLine(std::string line);
     void StartPrinting();
     void AddToPrintQue(std::string lineToPrint);
+    void WaitForConsole();
 
     std::string ReadLine();
     u_int ReadLineInt();
@@ -34,7 +35,10 @@ public:
 
     void FgthStart(const std::string &playerName, const std::string &monsterName);
     void FgthPickPlayerAction();
+
     void FgthMobAttack(const IMob &attacker, const IMob &reciever);
     void FgthMobDied(const IMob &mob);
+    void FgthMobFled(const IMob &mob);
+
     void FgthPlayerPickAction();
 };
