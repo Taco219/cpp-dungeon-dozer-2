@@ -1,6 +1,6 @@
 #include "game.hpp"
 
-// #include "monster.hpp"
+#include "monster.hpp"
 #include "player.hpp"
 
 #include <iostream>

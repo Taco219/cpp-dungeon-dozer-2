@@ -1,24 +1,25 @@
 #include "console.hpp"
 
+#include <iostream>
 #include <sstream>
 
 Console::Console(EventGenerator &eventGenerator)
     : eventGenerator(eventGenerator)
 {
     linesToPrint = std::vector<std::string>();
-    shouldBePrinting = true;
+    isRunning = true;
     thread = std::thread(&Console::StartPrinting, this);
 }
 
 Console::~Console()
 {
-    shouldBePrinting = false;
+    isRunning = false;
     thread.join();
 }
 
 void Console::StartPrinting()
 {
-    while (shouldBePrinting)
+    while (isRunning)
     {
         if (linesToPrint.size() > 0)
         {
@@ -41,11 +42,62 @@ void Console::AddToPrintQue(std::string lineToPrint)
     linesToPrint.push_back(lineToPrint);
 }
 
-void Console::PrintHelloWorld()
+std::string Console::ReadLine()
 {
-    AddToPrintQue("Hello world!");
+    if (isRunning)
+    {
+        std::string str;
+        std::lock_guard<std::mutex> guard(cliMutex);
+        std::getline(std::cin, str);
+        return str;
+    }
+
+    throw std::domain_error("Console::ReadLine: isRunning is false should be true.");
 }
 
+u_int Console::ReadLineInt()
+{
+    u_int i = 0;
+
+    while (isRunning && i <= 0)
+    {
+        try
+        {
+            std::string line = ReadLine();
+
+            i = std::stoi(line);
+            return i;
+        }
+        catch (std::invalid_argument)
+        {
+            PrintInvalidInput();
+        }
+    }
+
+    throw std::domain_error("Console::ReadLineInt: exited while loop without returning value");
+}
+
+u_int Console::ReadLineInt(u_int maxValue)
+{
+    u_int i = 0;
+    while (true)
+    {
+        i = ReadLineInt();
+
+        if (i <= maxValue)
+        {
+            return i;
+        }
+        PrintInvalidInput();
+    }
+}
+
+void Console::PrintInvalidInput()
+{
+    printf("Invalid input!\n");
+}
+
+// public
 void Console::FgthStart(const std::string &playerName, const std::string &monsterName)
 {
     std::ostringstream text(std::ostringstream::ate);
@@ -65,6 +117,11 @@ void Console::FgthMobAttack(const IMob &attacker, const IMob &reciever)
 void Console::FgthMobDied(const IMob &mob)
 {
     std::ostringstream text(std::ostringstream::ate);
-    text << mob.GetName() << "has died.";
+    text << mob.GetName() << " has died.";
     AddToPrintQue(text.str());
+}
+
+void Console::FgthPlayerPickAction()
+{
+    ReadLineInt();
 }
