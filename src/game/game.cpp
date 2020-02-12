@@ -5,8 +5,8 @@
 
 #include <iostream>
 
-Game::Game(Console &console, EventGenerator &eventGenerator)
-    : console(console), eventGenerator(eventGenerator)
+Game::Game(Console &console, EventGenerator &eventGenerator, Player &player)
+    : console(console), eventGenerator(eventGenerator), player(player)
 {
     isPlaying = true;
 }
@@ -19,8 +19,7 @@ Game::~Game()
 
 void Game::Run()
 {
-    Player player = Player("Taco", 100, 10);
-    Monster monster = Monster("monster", 20, 1);
+    Monster monster = Monster("monster", 20, 6);
 
     fight = new SdFight(console, eventGenerator, player, monster);
 

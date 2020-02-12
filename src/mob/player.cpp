@@ -1,7 +1,7 @@
 #include "player.hpp"
 
-Player::Player(std::string name, int health, int attack)
-    : name(name), health(health), attack(attack)
+Player::Player(std::string name, int health, Inventory inventory)
+    : name(name), health(health), inventory(inventory)
 {
 }
 
@@ -17,10 +17,14 @@ int Player::GetHealth() const
 
 int Player::GetAttack() const
 {
-    return attack;
+    return inventory.GetTotalDamage();
 }
 
-void Player::RecieveDamage(int damage)
+void Player::RecieveDamage(int incommingDamage)
 {
-    health -= damage;
+    int damage = incommingDamage - inventory.GetTotalDefence();
+    if (damage > 0)
+    {
+        health -= damage;
+    }
 }
